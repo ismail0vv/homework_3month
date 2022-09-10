@@ -13,13 +13,14 @@ async def start_command(message: types.Message):
 
 @dp.message_handler(commands=['mem'])
 async def mem_command(message: types.Message):
-    mem_photo = open("media/mem3.jpg", "rb")
-    number = random.randint(1, 4)
-    if number == 1:
-        mem_photo = open("media/mem1.jpg", "rb")
-    if number == 2:
-        mem_photo = open("media/mem2.jpg", "rb")
-    await bot.send_photo(message.chat.id, mem_photo)
+    pornhub = [
+        "media/mem1.jpg",
+        "media/mem2.jpg",
+        "media/mem3.jpg"
+    ]
+    photo = open(random.choice(pornhub), "rb")
+    await bot.send_photo(message.chat.id, photo=photo)
+    photo.close()
 
 
 @dp.message_handler(commands=["quiz"])
