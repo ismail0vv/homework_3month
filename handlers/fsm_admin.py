@@ -83,7 +83,7 @@ async def load_description(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['description'] = message.text
         await bot.send_photo(message.from_user.id, data['photo'],
-                       caption=f"Мына сага щедевр:\n{data['name']}, {data['type']} стоит: {data['type']}\n"
+                       caption=f"Мына сага щедевр:\n{data['name']}, {data['type']} стоит: {data['cost']}\n"
                                f"{data['description']}")
     await state.finish()
     await message.answer('Жарайсын жигар!')
