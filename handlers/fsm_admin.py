@@ -11,7 +11,7 @@ class FSMAdmin(StatesGroup):
     photo = State()
     name = State()
     type = State()
-    cost = State()
+    price = State()
     description = State()
 
 
@@ -55,15 +55,15 @@ async def load_type(message: types.Message, state: FSMContext):
     await message.answer('Теперь цена сие шедевра равна 💸', reply_markup=cancel_markup)
 
 
-async def load_cost(message: types.Message, state: FSMContext):
+async def load_price(message: types.Message, state: FSMContext):
     try:
-        cost = int(message.text)
-        if cost <= 0:
+        price = int(message.text)
+        if price <= 0:
             raise ValueError
-        if cost > 1000:
+        if price > 1000:
             raise AttributeError
         async with state.proxy() as data:
-            data['cost'] = str(cost)+" сом"
+            data['price'] = str(price)+" сом"
         await FSMAdmin.next()
         skip_button = KeyboardButton("Лень придумывать")
         skip_markup = ReplyKeyboardMarkup(
@@ -83,7 +83,7 @@ async def load_description(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['description'] = message.text
         await bot.send_photo(message.from_user.id, data['photo'],
-                       caption=f"Мына сага щедевр:\n{data['name']}, {data['type']} стоит: {data['cost']}\n"
+                       caption=f"Мына сага щедевр:\n{data['name']}, {data['type']} стоит: {data['price']}\n"
                                f"{data['description']}")
     await state.finish()
     await message.answer('Жарайсын жигар!')
@@ -104,5 +104,5 @@ def register_handlers_fsm_admin(dp: Dispatcher):
     dp.register_message_handler(load_photo, state=FSMAdmin.photo, content_types=['photo'])
     dp.register_message_handler(load_name, state=FSMAdmin.name)
     dp.register_message_handler(load_type, state=FSMAdmin.type)
-    dp.register_message_handler(load_cost, state=FSMAdmin.cost)
+    dp.register_message_handler(load_price, state=FSMAdmin.price)
     dp.register_message_handler(load_description, state=FSMAdmin.description)
