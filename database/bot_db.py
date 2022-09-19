@@ -11,8 +11,8 @@ def sql_create():
         print('Successfully connected!')
 
     db.execute("CREATE TABLE IF NOT EXISTS menu "
-               "(id INTEGER PRIMARY KEY, photo TEXT,"
-               "name TEXT, price INTEGER,"
+               "(photo TEXT,"
+               "name TEXT PRIMARY KEY, type TEXT, price INTEGER,"
                "description TEXT)")
     db.commit()
 
@@ -23,19 +23,21 @@ async def sql_command_insert(state):
         db.commit()
 
 
-async def sqL_command_random(message):
+async def sql_command_random(message):
     result = cursor.execute("SELECT * FROM menu").fetchall()
     random_dish = random.choice(result)
-    await bot.send_photo(message.from_user.id, random_dish[1],
-                         caption=f"{random_dish[2]}, {random_dish[3]}, {random_dish[4]}")
+    await bot.send_photo(message.chat.id, random_dish[0],
+                         caption=f"Мына сага щедевр:\n{random_dish[1]}, {random_dish[2]} стоит: {random_dish[3]}\n"
+                                 f"{random_dish[4]}")
 
 
 async def sql_command_all():
     return cursor.execute("SELECT * FROM menu").fetchall()
 
 
-async def sql_command_delete(id):
-    cursor.execute("DELETE FROM menu WHERE id = ?", tuple(id))
+async def sql_command_delete(name):
+    cursor.execute("DELETE FROM menu WHERE name = ?", (name, ))
+    print(name)
     db.commit()
 
 
