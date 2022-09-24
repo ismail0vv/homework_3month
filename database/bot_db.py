@@ -41,5 +41,9 @@ async def sql_command_delete(name):
     db.commit()
 
 
+async def sql_command_select_type(dish_type):
+    return cursor.execute("SELECT * FROM menu WHERE type = ?", (dish_type, )).fetchall()
+
+
 async def sql_command_get_all_id():
-    return cursor.execute("SELECT id FROM menu").fetchall()
+    return cursor.execute("SELECT name FROM menu").fetchall()
