@@ -1,9 +1,10 @@
 from aiogram.utils import executor
 from config import bot, dp
 import logging
-from handlers import admin, callback, extra, client, fsm_admin, notifications
+from handlers import admin, callback, extra, client, fsm_admin, notifications, inline
 from database.bot_db import sql_create
 import asyncio
+
 
 async def on_startup(_):
     asyncio.create_task(notifications.scheduler())
@@ -15,8 +16,9 @@ callback.register_handlers_callback(dp)
 admin.register_handlers_admin(dp)
 fsm_admin.register_handlers_fsm_admin(dp)
 notifications.register_handlers_notification(dp)
-extra.register_handlers_extra(dp)
+inline.register_inline_handler(dp)
 
+extra.register_handlers_extra(dp)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
