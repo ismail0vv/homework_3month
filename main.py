@@ -16,7 +16,7 @@ callback.register_handlers_callback(dp)
 admin.register_handlers_admin(dp)
 fsm_admin.register_handlers_fsm_admin(dp)
 notifications.register_handlers_notification(dp)
-inline.register_inline_handler(dp)
+inline.register_handler_inline(dp)
 
 extra.register_handlers_extra(dp)
 
