@@ -1,7 +1,8 @@
 from aiogram import types, Dispatcher
 import hashlib
 
-async def inline_wiki_handler(query: types.InlineQuery):
+
+async def inline_wikipedia_handler(query: types.InlineQuery):
     text = query.query or "echo"
     link = f"https://ru.wikipedia.org/wiki/{text}"
     articles = [types.InlineQueryResultArticle(
@@ -16,4 +17,4 @@ async def inline_wiki_handler(query: types.InlineQuery):
 
 
 def register_inline_handler(dp: Dispatcher):
-    dp.register_message_handler(inline_wiki_handler)
+    dp.register_message_handler(inline_wikipedia_handler)
