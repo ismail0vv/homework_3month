@@ -2,11 +2,11 @@ from aiogram import types, Dispatcher
 import hashlib
 
 async def inline_wiki_handler(query: types.InlineQuery):
-    text = query.query or "Заглавная_страница"
+    text = query.query or "echo"
     link = f"https://ru.wikipedia.org/wiki/{text}"
     articles = [types.InlineQueryResultArticle(
         id=hashlib.md5(text.encode()).hexdigest(),
-        title= "Wikipedia: ",
+        title="Wikipedia: ",
         url=link,
         input_message_content=types.InputMessageContent(
             message_text=link
