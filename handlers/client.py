@@ -5,7 +5,7 @@ from aiogram.dispatcher.filters import Text
 from config import bot, dp
 from database.bot_db import sql_command_random, sql_command_select_type
 from keyboard.client_cb import menu_markup
-from handlers.parse import parser
+from handlers.parse import ParserNews
 # @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
     await message.answer(f'Жакшысынарбы {message.from_user.full_name}')
@@ -13,12 +13,12 @@ async def start_command(message: types.Message):
 
 # @dp.message_handler(commands=['mem'])
 async def mem_command(message: types.Message):
-    pornhub = [
+    meme = [
         "media/mem1.jpg",
         "media/mem2.jpg",
         "media/mem3.jpg"
     ]
-    photo = open(random.choice(pornhub), "rb")
+    photo = open(random.choice(meme), "rb")
     await bot.send_photo(message.chat.id, photo=photo)
     photo.close()
 
@@ -74,15 +74,13 @@ async def show_dish_on_type(message: types.Message):
 
 
 async def parser_news(message: types.Message):
-    items = parser()
+    items = ParserNews.parser()
     for item in items:
         await bot.send_message(
             message.from_user.id,
             text=f"{item['link']}\n\n"
                  f"{item['title']}\n\n"
-                 f"{item['time']}, "
-                 f"#Y{item['day']}, "
-                 f"#{item['year']}\n"
+                 f"{item['date']}\n"
         )
 
 
